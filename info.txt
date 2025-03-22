@@ -1,0 +1,14 @@
+MySQL user
+user: admin@localhost
+password: Terskayl
+
+also root@localhost is my school password lol
+
+Django super user
+user: admin
+email: admin@admin.com
+password: terskayl
+
+
+errors in data set
+-45 timezone in cartoonFish commit 2
