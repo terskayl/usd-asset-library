@@ -19,7 +19,7 @@ MySQL is local to your machine so you would have to set it up. (obviously there 
 
 ### Django
    To start the server, use manage.py in the asset_library folder  
-   1. Open shell in asset_library folder
-   2. ```
-python manage.py runserver
+   Open shell in asset_library folder  
+    ```
+      python manage.py runserver
       ```
