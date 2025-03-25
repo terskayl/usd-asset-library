@@ -17,17 +17,69 @@ MySQL is local to your machine so you would have to set it up. (obviously there 
    ```
    your_user can also be root, your database name should be 'assets'.
 
+#### Example MacOS MySQLSetup:
+   ```bash
+      # Install mysql
+      brew install mysql pkgconf
+
+      # Start server
+      brew services start mysql
+      mysql -u root -p # Will prompt to set password
+
+      > CREATE DATABASE assets;
+   ```
+
+   Then, for now, I needed to create a user in mysql that matches Aaron's account authentication. An alternative solution is to modify the `DATABASES` field within `asset_library/asset_library/settings.py` to your own preferred acount info. However, for the sake of keeping git diffs clean, I opted for the foremost-mentioned solution:
+   
+   ```sql
+      > CREATE USER 'admin'@'localhost' IDENTIFIED BY 'terskayl';
+      > GRANT ALL PRIVILEGES ON assets.* TO 'admin'@'localhost';
+      > FLUSH PRIVILEGES;
+   ```
+
+   Lastly, import the backup.
+   ```bash
+   # In repo root directory
+   mysql -u root -p assets < assets_backup.sql
+   ```
+
+### Environment Setup
+   Optional: Setup a Python virtual environment however you usually do.
+
+   For example:
+   ```bash
+      # tested on macos
+      mkdir venv
+      python -m venv ./venv
+      source venv/bin/activate
+   ```
+
+   Install python dependencies:
+
+   `pip install -r requirements.txt`
+
+   This will automatically install all the pip packages we used in our package. These most importantly include:
+   - Django
+   - mysqlclient
+   - mysql-connector-python
+
 ### Django
-   Make sure you have Django and python's MySQL connection packages installed.
+   To start the server, you must first make migrations.
+   ```bash
+   python asset_library/manage.py migrate
+   ````
+
+   Then, you can start the server.
+
+   ```bash
+   python asset_library/manage.py runserver
    ```
-   pip install Django  
-   pip install mysqlclient
-   ```
-   If you are on Windows and encounter errors (I am on Windows and I did not), you can try 
-   `
-   pip install mysql-connector-python` instead.  
-   To start the server, use manage.py in the asset_library folder  
-   Open shell in asset_library folder  
-   ```
-   python manage.py runserver
-   ```
+
+### Current Contributors:
+**Aaron Jiang**: *aajiang@seas.upenn.edu* \
+**Cindy Xu**: *cxndy@seas.upenn.edu* \
+**Jacky Park**: *soominp@seas.upenn.edu* \
+**Amy Liu**: *liuamy05@sas.upenn.edu*
+
+### The End!
+If you run into any issues during setup, please let us know. The more bugs we fix, systems we adjust to, and documentation we can add, the better. Thanks!
