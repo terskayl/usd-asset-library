@@ -8,6 +8,7 @@
 <body>
     <h1>Asset Library</h1>
     <p>Welcome to the Asset Library!</p>
+    <button id="addAsset">Add Asset</button>
 
     <form method="get">
         <input name="q" type="text" placeholder="Search...">
@@ -17,7 +18,9 @@
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
         {% for asset in assets %}
         <div>
-            <h2>{{ asset.assetName }}</h2>
+            <a href="{% url 'asset_detail' asset.assetName %}">
+                <h2>{{ asset.assetName }}</h2>
+            </a>
             <p>Keywords: 
                 {% for keyword in asset.keywordsList.all%}
                 {{ keyword.keyword }}{% if not forloop.last %}, {% endif %}
@@ -27,5 +30,32 @@
             </div>
         {% endfor %}
     </div>
+    <div id="addAssetForm" style="display: none; position: fixed; top: 50%; left: 50%; translate: -50% -50%; background-color: white; padding: 20px; border: 1px solid black; z-index: 1000;">
+        <form method="post" action="{% url 'home' %}">
+            {% csrf_token %}
+            <label for="assetName">Asset Name:</label>
+            <input type="text" id="assetName" name="assetName" required><br><br>
+            <label for="version">Asset Version:</label>
+            <input type="text" id="version" name="version" required><br><br>
+            <label for="date">Date:</label>
+            <input type="datetime-local" id="date" name="date" required><br><br>
+            <label for="keywords">Keywords:</label>
+            <input type="text" id="keywords" name="keywords"><br><br>
+            <label for="note">Note:</label>
+            <input type="text" id="note" name="note"><br><br>
+            <button type="submit">Add Asset</button>
+            <button id="addAssetCancel"> Cancel </button>
+        </form>
+    </div>
+    <script>
+        function showAddAssetForm() {
+            document.getElementById('addAssetForm').style.display = 'block';
+        }
+        function hideAddAssetForm() {
+            document.getElementById('addAssetForm').style.display = 'none';
+        }
+        document.getElementById('addAsset').addEventListener('click', showAddAssetForm);
+        document.getElementById('addAssetCancel').addEventListener('click', hideAddAssetForm);
+    </script>
 </body>
 </html>

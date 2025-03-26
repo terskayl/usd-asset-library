@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ asset.asset_name }}</title>
+</head>
+<body>
+    <a href="{% url 'home' %}">
+        <h1> < Back </h1>
+    </a>
+    <form method="get"action="{% url 'home' %}">
+        <input name="q" type="text" placeholder="Search...">
+    </form>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+        <div>
+            <h2>{{ asset.assetName }}</h2>
+            
+
+            <p>Keywords: 
+                {% for keyword in asset.keywordsList.all%}
+                <div style="border-radius: 10px; background-color: blue; padding: 10px; color: white; width: 64px; height: 24px; display: inline-block; margin: 5px;">
+                    {{ keyword.keyword }}
+                </div>
+                {% endfor %}
+            </p>
+            Has texture? {% if keyword.hasTexture %} Yes {% else %} No {% endif %} <br>
+            ID: {{ asset.id }} <br>
+
+            Created: {{commits.last.timestamp}} by {{commits.last.author}} <br>
+            Last Modified: {{commits.first.timestamp}} by {{commits.first.author}} <br>
+            
+            <div>
+                <h3>Commit History</h3>
+                {% for commit in commits%}
+                <!--Note: rework when author table is implemented-->
+                <h4>Version: {{ commit.version }}</h4>
+                Author: {{ commit.author }} <br>
+                Asset {% if commit == commits.last %} Created{% else %} Updated{% endif %}: {{ commit.timestamp }} <br>
+                {{ commit.note }} <br>
+                {% endfor %}
+            </div>
+
+        </div>
+        <div>
+            <!--Thumbnail waiting for S3 Integration-->
+            <h1>THUMBNAIL PLACEHOLDER</h1>
+            <div>
+                <h1>Download</h1>
+            </div>
+            <div>
+                <h1>
+                    <button id="updateAsset">Upload</button>
+                </h1>
+            </div>
+            <div>
+                <h3>Individually Download Sublayers:</h3>
+                {% for version in versions%}
+                {{ version.versionName }}
+                <a href="">
+                    <!--Waiting for S3 Integration-->
+                    <div>Download</div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+    <div id="updateAssetForm" style="display: none; position: fixed; top: 50%; left: 50%; translate: -50% -50%; background-color: white; padding: 20px; border: 1px solid black; z-index: 1000;">
+        <form method="post" action="{% url 'home' %}">
+            {% csrf_token %}
+            <label for="version">Asset Version:</label>
+            <input type="text" id="version" name="version" required><br><br>
+            <label for="date">Date:</label>
+            <input type="datetime-local" id="date" name="date" required><br><br>
+            <label for="keywords">Keywords:</label>
+            <input type="text" id="keywords" name="keywords"><br><br>
+            <label for="note">Note:</label>
+            <input type="text" id="note" name="note"><br><br>
+            <button type="submit">Add Asset</button>
+            <button id="updateAssetCancel"> Cancel </button>
+        </form>
+    </div>
+    <script>
+        function showAddAssetForm() {
+            document.getElementById('updateAssetForm').style.display = 'block';
+        }
+        function hideAddAssetForm() {
+            document.getElementById('updateAssetForm').style.display = 'none';
+        }
+        document.getElementById('updateAsset').addEventListener('click', showAddAssetForm);
+        document.getElementById('updateAssetCancel').addEventListener('click', hideAddAssetForm);
+    </script>
+</body>
+</html>
