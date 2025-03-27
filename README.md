@@ -29,7 +29,7 @@ MySQL is local to your machine so you would have to set it up. (obviously there 
       > CREATE DATABASE assets;
    ```
 
-   Then, for now, I needed to create a user in mysql that matches Aaron's account authentication. An alternative solution is to modify the `DATABASES` field within `asset_library/asset_library/settings.py` to your own preferred acount info. However, for the sake of keeping git diffs clean, I opted for the foremost-mentioned solution:
+   Then, for now, I needed to create a user in mysql that matches Aaron's account authentication. An alternative solution is to modify the `DATABASES` field within `./asset_library/settings.py` to your own preferred acount info. However, for the sake of keeping git diffs clean, I opted for the foremost-mentioned solution:
    
    ```sql
       > CREATE USER 'admin'@'localhost' IDENTIFIED BY 'terskayl';
@@ -43,6 +43,25 @@ MySQL is local to your machine so you would have to set it up. (obviously there 
    mysql -u root -p assets < assets_backup.sql
    ```
 
+### File Crawler Tool
+  A script is also provided to create the database from scratch by crawling through the whole asset folder (i.e. Week 6 Assets).
+
+  You still need MySQL to perform this step. There should be an assets db already created so Django can connect with it.
+
+  1. Download our class's assets from Google Drive all in one folder and replace 
+  `folder_path` in `./asset_library/library/script.py` with the folder location.
+  2. Open the python shell for Django using `python manage.py shell` in console.
+  3.  Run the following code:
+      ```python
+      from library.models import Asset, Keyword, AssetVersion, Commit
+      # Clear current db
+      Asset.objects.all().delete()
+      from library.script import Script
+      a = Script()
+      a.runFileCrawler()
+      # Can check entries added
+      Asset.objects.all()
+      ```
 ### Environment Setup
    Optional: Setup a Python virtual environment however you usually do.
 
