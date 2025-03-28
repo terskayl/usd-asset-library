@@ -26,9 +26,10 @@ class Asset(models.Model):
     hasTexture = models.BooleanField(default=False)
     checkedOutBy = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True, blank=True)
     thumbnailKey = models.CharField(max_length=200, blank=True, null=True)
-
+    
     def __str__(self):
         return self.assetName
+
     
 class AssetVersion(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
