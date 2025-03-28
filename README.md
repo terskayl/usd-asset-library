@@ -82,6 +82,19 @@ MySQL is local to your machine so you would have to set it up. (obviously there 
    - mysqlclient
    - mysql-connector-python
 
+### S3 Integration Setup
+
+To enable asset downloading from AWS S3, you’ll need to add a `.env` file at the root of the project containing your credentials:
+
+1. Create a `.env` file in the root directory (next to `manage.py`) with the following content:
+
+   ```env
+   AWS_ACCESS_KEY_ID=your-access-key-id
+   AWS_SECRET_ACCESS_KEY=your-secret-access-key
+   AWS_REGION=us-east-1
+   AWS_BUCKET_NAME=cis-7000-usd-assets
+
+
 ### Django
    To start the server, you must first make migrations.
    ```bash
