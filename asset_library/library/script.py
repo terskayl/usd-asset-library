@@ -5,6 +5,7 @@ import uuid
 from pathlib import Path
 import json
 import subprocess
+from django.conf import settings
 
 folder_path = Path("C:\\Users\\Admin\\Documents\\School\\cis-7000-production-pipilines\\final-project\\week-6-assets")
 
@@ -23,10 +24,8 @@ class Script:
                     assetName = assetName[:-4]
                 assetStructureVersion = metadata["assetStructureVersion"]
                 hasTexture = metadata["hasTexture"]
-                bucketName = "cis-7000-usd-assets"
-                s3link = f"https://{bucketName}.s3.amazonaws.com/{assetName}"
-
-                asset = Asset(id=id, assetName=assetName, assetStructureVersion=assetStructureVersion, hasTexture=hasTexture, s3link=s3link)
+                thumbnailKey = f"{assetName}/thumbnail.png"
+                asset = Asset(id=id, assetName=assetName, assetStructureVersion=assetStructureVersion, hasTexture=hasTexture, thumbnailKey=thumbnailKey)
                 asset.save()
                 for keyword in metadata["keywords"]:
                     keyword, created = Keyword.objects.get_or_create(keyword=keyword.lower())

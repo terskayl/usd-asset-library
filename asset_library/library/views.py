@@ -14,21 +14,37 @@ import os
 def home(request):
     query = request.GET.get("q")
     assets = Asset.objects.prefetch_related('keywordsList').all()
+
     if query:
-        assets = Asset.objects.prefetch_related('keywordsList').filter( Q(assetName__icontains=query) | Q(keywordsList__keyword__icontains=query) ).distinct()
-    template = loader.get_template('home.html')
+        assets = assets.filter(
+            Q(assetName__icontains=query) |
+            Q(keywordsList__keyword__icontains=query)
+        ).distinct()
+
+    s3 = S3Manager()
+    assets_with_urls = []
+    for asset in assets:
+        thumbnail_url = s3.generate_presigned_url(asset.thumbnailKey) if asset.thumbnailKey else None
+        assets_with_urls.append({
+            "asset": asset,
+            "thumbnail_url": thumbnail_url
+        })
+
     context = {
-        'assets': assets,
+        'assets_with_urls': assets_with_urls,
     }
-    return HttpResponse(template.render(context, request))
+    return render(request, 'home.html', context)
 
 def asset_detail(request, asset_name):
     asset = Asset.objects.prefetch_related('keywordsList').get(assetName=asset_name)
     template = loader.get_template('asset_detail.html')
     commits = Commit.objects.filter(asset=asset).order_by('-timestamp')
     versions = AssetVersion.objects.filter(asset=asset).order_by('-versionName')
+    s3 = S3Manager()
+    thumbnail = s3.generate_presigned_url(asset.thumbnailKey) if asset.thumbnailKey else None
     context = {
         'asset': asset,
+        'thumbnail': thumbnail,
         'commits': commits,
         'versions': versions,
     }

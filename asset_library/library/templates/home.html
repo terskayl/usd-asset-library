@@ -14,23 +14,31 @@
         <input name="q" type="text" placeholder="Search...">
     </form>
 
-
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
-        {% for asset in assets %}
+        {% for item in assets_with_urls %}
+        {% with asset=item.asset thumbnail=item.thumbnail_url %}
         <div>
             <a href="{% url 'asset_detail' asset.assetName %}">
                 <h2>{{ asset.assetName }}</h2>
             </a>
-            <img src={{asset.thumbnail.url}} alt={{asset.assetName}} style="width: 200px; height: 200px;">
+            {% if thumbnail %}
+                <img src="{{ thumbnail }}" alt="{{ asset.assetName }}" style="width: 200px; height: 200px;">
+            {% else %}
+                <div style="width: 200px; height: 200px; background: #eee; display: flex; align-items: center; justify-content: center;">
+                    <span>No Thumbnail</span>
+                </div>
+            {% endif %}
             <p>Keywords: 
-                {% for keyword in asset.keywordsList.all%}
-                {{ keyword.keyword }}{% if not forloop.last %}, {% endif %}
+                {% for keyword in asset.keywordsList.all %}
+                    {{ keyword.keyword }}{% if not forloop.last %}, {% endif %}
                 {% endfor %}
             </p>
             <p>ID: {{ asset.id }}</p>
-            </div>
+        </div>
+        {% endwith %}
         {% endfor %}
     </div>
+
     <div id="addAssetForm" style="display: none; position: fixed; top: 50%; left: 50%; translate: -50% -50%; background-color: white; padding: 20px; border: 1px solid black; z-index: 1000;">
         <form method="post" action="{% url 'home' %}">
             {% csrf_token %}
@@ -48,6 +56,7 @@
             <button id="addAssetCancel"> Cancel </button>
         </form>
     </div>
+
     <script>
         function showAddAssetForm() {
             document.getElementById('addAssetForm').style.display = 'block';
