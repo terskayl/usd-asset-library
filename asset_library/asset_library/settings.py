@@ -26,8 +26,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")  # Directory to store files
 SECRET_KEY = 'django-insecure-jp1p*na!&1(zln6vx28y5a*a*bqk+sfljuilrx8)&vri4t_*ke'
 AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
-AWS_REGION = "us-east-2"
-AWS_BUCKET_NAME = "cis-7000-usd-assets" 
+AWS_REGION = config("AWS_REGION")
+AWS_BUCKET_NAME = config("AWS_BUCKET_NAME")
 #" SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 

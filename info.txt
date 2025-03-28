@@ -11,7 +11,7 @@ password: terskayl
 
 
 errors in data set
--45 timezone in cartoonFish commit 2
+-45 timezone in cartoonFish commit 2 (edit: fixed!)
 
 Reminder: create a backup using the following command
 mysqldump -u root -p assets > assets_backup.sql

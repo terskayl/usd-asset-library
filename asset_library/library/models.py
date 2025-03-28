@@ -24,9 +24,8 @@ class Asset(models.Model):
     assetStructureVersion = models.CharField(max_length=32)
     keywordsList = models.ManyToManyField(Keyword)
     hasTexture = models.BooleanField(default=False)
-    thumbnail = models.FileField(upload_to='uploads/', default="uploads/default.png")
     checkedOutBy = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True, blank=True)
-    s3link = models.CharField(max_length=200)
+    thumbnailKey = models.CharField(max_length=200, blank=True, null=True)
 
     def __str__(self):
         return self.assetName
