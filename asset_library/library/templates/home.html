@@ -21,6 +21,7 @@
             <a href="{% url 'asset_detail' asset.assetName %}">
                 <h2>{{ asset.assetName }}</h2>
             </a>
+            <img src={{asset.thumbnail.url}} alt={{asset.assetName}} style="width: 200px; height: 200px;">
             <p>Keywords: 
                 {% for keyword in asset.keywordsList.all%}
                 {{ keyword.keyword }}{% if not forloop.last %}, {% endif %}
