@@ -6,7 +6,7 @@ from pathlib import Path
 import json
 import subprocess
 
-folder_path = Path("C:\\Users\\njbhv\\Downloads\\Week 4 Assets")
+folder_path = Path("C:\\Users\\Admin\\Documents\\School\\cis-7000-production-pipilines\\final-project\\week-6-assets")
 
 class Script:
     
@@ -23,8 +23,10 @@ class Script:
                     assetName = assetName[:-4]
                 assetStructureVersion = metadata["assetStructureVersion"]
                 hasTexture = metadata["hasTexture"]
+                bucketName = "cis-7000-usd-assets"
+                s3link = f"https://{bucketName}.s3.amazonaws.com/{assetName}"
 
-                asset = Asset(id=id, assetName=assetName, assetStructureVersion=assetStructureVersion, hasTexture=hasTexture)
+                asset = Asset(id=id, assetName=assetName, assetStructureVersion=assetStructureVersion, hasTexture=hasTexture, s3link=s3link)
                 asset.save()
                 for keyword in metadata["keywords"]:
                     keyword, created = Keyword.objects.get_or_create(keyword=keyword.lower())
@@ -39,7 +41,7 @@ class Script:
                     version = commit["version"] 
                     timestamp = datetime.fromisoformat(commit["timestamp"])
                     note = commit["note"]
-                    commit = Commit(author=author, version=version, timestamp=timestamp, note=note, asset=asset, s3link="")
+                    commit = Commit(author=author, version=version, timestamp=timestamp, note=note, asset=asset)
                     commit.save()
 
                 variantSet = AssetVersion(id=uuid.uuid4(), versionName="Variant Set", filepath=assetFolder / f"{assetName}.usda", asset=asset)

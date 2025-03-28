@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+from decouple import config
 from pathlib import Path
 import os
 
@@ -24,12 +24,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")  # Directory to store files
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-jp1p*na!&1(zln6vx28y5a*a*bqk+sfljuilrx8)&vri4t_*ke'
-
-# SECURITY WARNING: don't run with debug turned on in production!
+AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
+AWS_REGION = "us-east-2"
+AWS_BUCKET_NAME = "cis-7000-usd-assets" 
+#" SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
