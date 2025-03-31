@@ -169,3 +169,5 @@ staticfiles/
 **/migrations/*.pyc
 
 .vscode
+
+node_modules
