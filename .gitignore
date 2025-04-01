@@ -168,4 +168,6 @@ staticfiles/
 **/migrations/__pycache__/
 **/migrations/*.pyc
 
+.vscode
 node_modules
+.DS_Store
