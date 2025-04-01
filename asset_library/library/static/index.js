@@ -1,4 +1,4 @@
-import { showViewer, closeViewer } from "./usd_viewer";
+import { showViewer, closeViewer } from "./gltf_viewer";
 
 window.addEventListener("DOMContentLoaded", () => {
   document

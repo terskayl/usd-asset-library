@@ -14,7 +14,7 @@ class S3Manager:
     def generate_presigned_url(self, key, expires_in=60):
         return self.client.generate_presigned_url(
             'get_object',
-            Params={'Bucket': self.bucket, 'Key': key},
+            Params={'Bucket': self.bucket, 'Key': key}, # relative path to bucket
             ExpiresIn=expires_in
         )
 

@@ -6,4 +6,10 @@ module.exports = {
     filename: "bundle.js",
     path: path.resolve(__dirname, "static"),
   },
+  optimization: {
+    minimize: true,
+    splitChunks: {
+      chunks: 'all',
+    },
+  },
 };

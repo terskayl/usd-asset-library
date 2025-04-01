@@ -12,6 +12,9 @@ migrate:
 run:
 	python asset_library/manage.py runserver
 
+npm-dev:
+	npm --prefix=./asset_library run dev
+
 # env-up:
 # 	pyenv activate usd-asset-library; \
 
