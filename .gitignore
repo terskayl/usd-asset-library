@@ -167,3 +167,5 @@ staticfiles/
 .env
 **/migrations/__pycache__/
 **/migrations/*.pyc
+
+node_modules
