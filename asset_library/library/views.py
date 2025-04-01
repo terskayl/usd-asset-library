@@ -42,11 +42,15 @@ def asset_detail(request, asset_name):
     versions = AssetVersion.objects.filter(asset=asset).order_by('-versionName')
     s3 = S3Manager()
     thumbnail = s3.generate_presigned_url(asset.thumbnailKey) if asset.thumbnailKey else None
+    glbKey = f"{asset_name}/{asset_name}.glb"
+    glbUrl = s3.generate_presigned_url(glbKey)
+
     context = {
         'asset': asset,
         'thumbnail': thumbnail,
         'commits': commits,
         'versions': versions,
+        'glb': glbUrl,
     }
     return HttpResponse(template.render(context, request))
 

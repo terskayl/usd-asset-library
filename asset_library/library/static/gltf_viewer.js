@@ -37,10 +37,12 @@ export function showViewer() {
   pointLight.position.set(10, 10, 20); // Set the position of the light
   scene.add(pointLight);
 
+  let url = document.getElementById("glb-url-holder").placeholder;
+
   const loader = new GLTFLoader();
 
   loader.load(
-    "/static/gltf/twin_pots.gltf",
+    url,
     // called when the resource is loaded
     function (gltf) {
       scene.add(gltf.scene);
