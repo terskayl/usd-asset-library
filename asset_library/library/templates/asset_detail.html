@@ -97,9 +97,9 @@
     </div>
     
 
-    <!-- USD Viewer Overlay -->
-    <div id="usd-viewer-container" style="display: none; position: fixed; top: 30px; left: 30px; width: 95%; height: 90%; background: rgba(0,0,0,0.85); z-index: 1000;">
-        <input type="url" id="glb-url-holder" placeholder={{glb}} style="display: none;"/>
+    <!-- GLB Viewer Overlay -->
+    <div id="glb-viewer-container" style="display: none; position: fixed; top: 30px; left: 30px; width: 95%; height: 90%; background: rgba(0,0,0,0.85); z-index: 1000;">
+        <input type="hidden" id="glb-url-holder" value={{glb}} />
         <button id="closeViewerButton" style="position: absolute; top: 20px; right: 20px; padding: 10px 20px; background: white; border: none; border-radius: 10px; cursor: pointer;">Close</button>
     </div>
 
@@ -112,14 +112,7 @@
             e.preventDefault();
             document.getElementById('updateAssetForm').style.display = 'none';
         });
-    
-        document.getElementById('showViewerButton').addEventListener('click', () => {
-            document.getElementById('usd-viewer-container').style.display = 'block';
-        });
-    
-        document.getElementById('closeViewerButton').addEventListener('click', () => {
-            document.getElementById('usd-viewer-container').style.display = 'none';
-        });
+
     </script>    
 </body>
 </html>

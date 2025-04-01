@@ -2,7 +2,7 @@ import * as THREE from "three";
 
 export function showViewer() {
   // Use the existing container
-  const container = document.getElementById("usd-viewer-container");
+  const container = document.getElementById("glb-viewer-container");
   container.style.display = "block";
 
   const scene = new THREE.Scene();
@@ -44,7 +44,7 @@ export function showViewer() {
 
 export function closeViewer() {
   // Clean up the viewer
-  const container = document.getElementById("usd-viewer-container");
+  const container = document.getElementById("glb-viewer-container");
 
   container.style.display = "none";
   while (container.firstChild) {
