@@ -1,1 +1,1 @@
-web: gunicorn asset_library.wsgi --log-file -
+web: gunicorn asset_library.wsgi:application --log-file -
